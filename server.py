@@ -3,35 +3,75 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-# قائمة المفاتيح الـ 50 المطلوبة
+# قائمة المفاتيح الـ 50 المكونة من أحرف وأرقام مع مفتاح المالك الخاص بك
 VALID_KEYS = {
-    "5mk-owner-0001",
-    "5mk-a1b2c3-d4e5f6", "5mk-z9y8x7-w6v5u4", "5mk-m1n2o3-p4q5r6", "5mk-j7k8l9-m0n1o2",
-    "5mk-q3r4s5-t6u7v8", "5mk-w9x0y1-z2a3b4", "5mk-c5d6e7-f8g9h0", "5mk-i1j2k3-l4m5n6",
-    "5mk-o7p8q9-r0s1t2", "5mk-u3v4w5-x6y7z8", "5mk-a9b0c1-d2e3f4", "5mk-g5h6i7-j8k9l0",
-    "5mk-m1n2o3-p4q5r7", "5mk-s3t4u5-v6w7x8", "5mk-y9z0a1-b2c3d4", "5mk-e5f6g7-h8i9j0",
-    "5mk-k1l2m3-n4o5p6", "5mk-q7r8s9-t0u1v2", "5mk-w3x4y5-z6a7b8", "5mk-c9d0e1-f2g3h4",
-    "5mk-i5j6k7-l8m9n0", "5mk-o1p2q3-r4s5t6", "5mk-u7v8w9-x0y1z2", "5mk-a3b4c5-d6e7f8",
-    "5mk-g9h0i1-j2k3l4", "5mk-m5n6o7-p8q9r0", "5mk-s1t2u3-v4w5x6", "5mk-y7z8a9-b0c1d2",
-    "5mk-e3f4g5-h6i7j8", "5mk-k9l0m1-n2o3p4", "5mk-q5r6s7-t8u9v0", "5mk-w1x2y3-z4a5b6",
-    "5mk-c7d8e9-f0g1h2", "5mk-i3j4k5-l6m7n8", "5mk-o9p0q1-r2s3t4", "5mk-u5v6w7-x8y9z0",
-    "5mk-a1b3c5-d7e9f1", "5mk-g2h4i6-j8k0l2", "5mk-m3n5o7-p9q1r3", "5mk-s2t4u6-v8w0x2",
-    "5mk-y1z3a5-b7c9d1", "5mk-e2f4g6-h8i0j2", "5mk-k3l5m7-n9o1p3", "5mk-q2r4s6-t8u0v2",
-    "5mk-w1x3y5-z7a9b1", "5mk-c2d4e6-f8g0h2", "5mk-i3j5k7-l9m1n3", "5mk-o2p4q6-r8s0t2"
+    "5mk-owner-0001": None,
+    "5mk-A482-9B04": None,
+    "5mk-37C6-18X9": None,
+    "5mk-89D3-40F2": None,
+    "5mk-1E48-5932": None,
+    "5mk-72H1-38J5": None,
+    "5mk-6K12-8930": None,
+    "5mk-2L34-7M09": None,
+    "5mk-9N60-23P4": None,
+    "5mk-3Q05-6R82": None,
+    "5mk-8S72-19T0": None,
+    "5mk-5U01-48V3": None,
+    "5mk-2W48-76X0": None,
+    "5mk-6Y39-20Z1": None,
+    "5mk-1A28-3B47": None,
+    "5mk-7C02-5D18": None,
+    "5mk-4E93-8F24": None,
+    "5mk-6G58-1H73": None,
+    "5mk-2J87-4K01": None,
+    "5mk-8L64-3M29": None,
+    "5mk-5N30-6P14": None,
+    "5mk-3Q41-7R58": None,
+    "5mk-7S25-1T93": None,
+    "5mk-1U69-8V05": None,
+    "5mk-6W10-4X92": None,
+    "5mk-2Y04-5Z31": None,
+    "5mk-9A82-3B67": None,
+    "5mk-4C73-1D28": None,
+    "5mk-8E19-6F50": None,
+    "5mk-3G48-7H06": None,
+    "5mk-7J51-2K39": None,
+    "5mk-1L30-4M25": None,
+    "5mk-5N02-9P73": None,
+    "5mk-2Q94-3R81": None,
+    "5mk-6S21-5T48": None,
+    "5mk-4U08-8V72": None,
+    "5mk-8W50-1X94": None,
+    "5mk-1Y64-7Z09": None,
+    "5mk-9A32-4B10": None,
+    "5mk-3C19-6D47": None,
+    "5mk-6E04-1F83": None,
+    "5mk-2G91-7H60": None,
+    "5mk-7J85-3K42": None,
+    "5mk-5L39-8M14": None,
+    "5mk-1N40-6P52": None,
+    "5mk-8Q23-4R90": None,
+    "5mk-3S09-5T71": None,
+    "5mk-7U41-2V68": None,
+    "5mk-4W90-9X25": None,
+    "5mk-6Y12-3Z90": None,
 }
 
 class LicenseRequest(BaseModel):
     key: str
-    hwid: str
+    mwic: str
 
 @app.post("/verify")
 def verify_license(data: LicenseRequest):
     if data.key not in VALID_KEYS:
-        raise HTTPException(status_code=400, detail="المفتاح غير صالح أو غير موجود!")
+        raise HTTPException(status_code=400, detail="مفتاح التفعيل غير صحيح!")
     
-    # هنا يتم قبول المفتاح وربطه بالـ HWID بنجاح
-    return {"status": "success", "message": "تم التحقق وربط الهاردوير بنجاح!"}
-
-@app.get("/")
-def read_root():
-    return {"status": "Server is running online!"}
+    current_mwic = VALID_KEYS[data.key]
+    
+    if current_mwic is None:
+        VALID_KEYS[data.key] = data.mwic
+        return {"status": "success", "message": "تم ربط وتفعيل المفتاح بنجاح!"}
+    elif current_mwic == data.mwic:
+        return {"status": "success", "message": "تم التحقق بنجاح!"}
+    else:
+        raise HTTPException(status_code=400, detail="المفتاح مستخدم على جهاز آخر!")
